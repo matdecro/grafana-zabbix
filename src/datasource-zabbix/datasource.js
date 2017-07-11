@@ -34,6 +34,9 @@ class ZabbixAPIDatasource {
     this.trendsFrom       = instanceSettings.jsonData.trendsFrom || '7d';
     this.trendsRange      = instanceSettings.jsonData.trendsRange || '4d';
 
+    // Show only enabled hosts
+    this.enabledHosts     = instanceSettings.jsonData.enabledHosts;
+
     // Set cache update interval
     var ttl = instanceSettings.jsonData.cacheTTL || '1h';
     this.cacheTTL = utils.parseInterval(ttl);
@@ -43,7 +46,14 @@ class ZabbixAPIDatasource {
     this.addThresholds = instanceSettings.jsonData.addThresholds;
     this.alertingMinSeverity = instanceSettings.jsonData.alertingMinSeverity || c.SEV_WARNING;
 
-    this.zabbix = new Zabbix(this.url, this.username, this.password, this.basicAuth, this.withCredentials, this.cacheTTL);
+    this.zabbix = new Zabbix(
+        this.url,
+        this.username,
+        this.password,
+        this.basicAuth,
+        this.withCredentials,
+        this.cacheTTL,
+        this.enabledHosts);
 
     // Use custom format for template variables
     this.replaceTemplateVars = _.partial(replaceTemplateVars, this.templateSrv);

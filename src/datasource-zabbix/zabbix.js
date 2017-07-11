@@ -11,11 +11,11 @@ import './zabbixCachingProxy.service.js';
 function ZabbixFactory(zabbixAPIService, ZabbixCachingProxy) {
 
   class Zabbix {
-    constructor(url, username, password, basicAuth, withCredentials, cacheTTL) {
+    constructor(url, username, password, basicAuth, withCredentials, cacheTTL, enabledHosts) {
 
       // Initialize Zabbix API
       var ZabbixAPI = zabbixAPIService;
-      this.zabbixAPI = new ZabbixAPI(url, username, password, basicAuth, withCredentials);
+      this.zabbixAPI = new ZabbixAPI(url, username, password, basicAuth, withCredentials, enabledHosts);
 
       // Initialize caching proxy for requests
       let cacheOptions = {

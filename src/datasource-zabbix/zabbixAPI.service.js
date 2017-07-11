@@ -13,7 +13,7 @@ function ZabbixAPIServiceFactory(alertSrv, zabbixAPICoreService) {
    */
   class ZabbixAPI {
 
-    constructor(api_url, username, password, basicAuth, withCredentials) {
+    constructor(api_url, username, password, basicAuth, withCredentials, enabledHosts) {
       this.url              = api_url;
       this.username         = username;
       this.password         = password;
@@ -33,6 +33,7 @@ function ZabbixAPIServiceFactory(alertSrv, zabbixAPICoreService) {
 
       this.getTrend = this.getTrend_ZBXNEXT1193;
       //getTrend = getTrend_30;
+      this.enabledHosts = enabledHosts;
     }
 
     //////////////////////////
@@ -130,6 +131,9 @@ function ZabbixAPIServiceFactory(alertSrv, zabbixAPICoreService) {
         output: ['name', 'host'],
         sortfield: 'name'
       };
+      if(this.enabledHosts) {
+        params.monitored_hosts = true;
+      }
       if (groupids) {
         params.groupids = groupids;
       }
